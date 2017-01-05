@@ -1,7 +1,3 @@
-venv
-*.pyc
-db.sqlite3
-
 # OSX
 #
 .DS_Store
