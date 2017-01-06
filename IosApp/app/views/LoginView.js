@@ -9,11 +9,21 @@ import {
   AppRegistry,
   StyleSheet,
   Text,
-  View
+  View,
+  TouchableHighlight,
+  TextInput
 } from 'react-native';
 import DashboardView from './DashboardView'
 
 export default class LoginView extends Component {
+  constructor(props) {
+    super(props)
+    this.state = {
+      username: '',
+      password: ''
+    }
+  }
+
   handleGoToDashboard() {
     this.props.navigator.push({
       title: 'Dashboard',
@@ -24,9 +34,20 @@ export default class LoginView extends Component {
   render() {
     return (
       <View style={styles.container}>
-        <Text style={styles.instructions} onPress={this.handleGoToDashboard.bind(this)}>
-          Go to Dashboard
-        </Text>
+        <TextInput
+          style={styles.input}
+          placeholder="Username"
+          value={this.state.username}
+          onChangeText={(text) => { this.setState({ username: text }) }}/>
+        <TextInput
+          style={styles.input}
+          placeholder="Password"
+          value={this.state.password}
+          secureTextEntry={true}
+          onChangeText={(text) => { this.setState({ password: text }) }}/>
+        <TouchableHighlight style={styles.button}>
+          <Text>Submit</Text>
+        </TouchableHighlight>
       </View>
     );
   }
@@ -49,4 +70,17 @@ const styles = StyleSheet.create({
     color: '#333333',
     marginBottom: 5,
   },
+  input: {
+    height: 40,
+    marginLeft: 30,
+    marginRight: 30,
+    fontSize: 18,
+  },
+  button: {
+    backgroundColor: 'white',
+    padding: 10,
+    paddingLeft: 20,
+    paddingRight: 20,
+    borderRadius: 10
+  }
 });
