@@ -13,7 +13,8 @@ import {
   TouchableHighlight,
   TextInput
 } from 'react-native';
-import DashboardView from './DashboardView'
+import DashboardView from './DashboardView';
+import CookieManager from 'react-native-cookies';
 
 export default class LoginView extends Component {
   constructor(props) {
@@ -25,6 +26,7 @@ export default class LoginView extends Component {
   }
 
   handleSubmitLogin() {
+    const _this = this;
     if (this.state.username && this.state.password) {
       fetch(`http://127.0.0.1:8000/api-token-auth/`, {
         method: 'POST',
@@ -38,7 +40,7 @@ export default class LoginView extends Component {
         })
       })
       .then(response => {
-        response.json().then(response => alert(response.token));
+        response.json().then(response => _this.setCookie(response.token));
       });
     }
   }
@@ -50,7 +52,24 @@ export default class LoginView extends Component {
     })
   }
 
+  setCookie(token) {
+    let date = new Date();
+    date.setDate(date.getDate() + 7);
+    CookieManager.set({
+      name: 'access_token',
+      value: token,
+      domain: 'http://127.0.0.1:8000',
+      origin: 'http://127.0.0.1:8000',
+      path: '/',
+      version: '1',
+      expiration: date.toJSON()
+    }, (err, res) => {
+      this.handleGoToDashboard()
+    });
+  }
+
   render() {
+    CookieManager.getAll((err, res) => console.log(res.access_token.value));
     return (
       <View style={styles.container}>
         <TextInput

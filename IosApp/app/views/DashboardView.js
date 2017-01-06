@@ -5,6 +5,7 @@ import {
   View
 } from 'react-native';
 import LoginView from './LoginView';
+import CookieManager from 'react-native-cookies'
 
 export default class DashboardView extends Component {
   handleGoToLogin() {
@@ -15,6 +16,7 @@ export default class DashboardView extends Component {
   }
 
   render() {
+    CookieManager.getAll((err, res) => console.log(res.access_token));
     return (
       <View style={styles.container}>
         <Text style={styles.welcome}>
