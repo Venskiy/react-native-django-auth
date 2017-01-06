@@ -24,6 +24,25 @@ export default class LoginView extends Component {
     }
   }
 
+  handleSubmitLogin() {
+    if (this.state.username && this.state.password) {
+      fetch(`http://127.0.0.1:8000/api-token-auth/`, {
+        method: 'POST',
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          username: this.state.username,
+          password: this.state.password
+        })
+      })
+      .then(response => {
+        response.json().then(response => alert(response.token));
+      });
+    }
+  }
+
   handleGoToDashboard() {
     this.props.navigator.push({
       title: 'Dashboard',
@@ -45,8 +64,10 @@ export default class LoginView extends Component {
           value={this.state.password}
           secureTextEntry={true}
           onChangeText={(text) => { this.setState({ password: text }) }}/>
-        <TouchableHighlight style={styles.button}>
-          <Text>Submit</Text>
+        <TouchableHighlight
+          style={styles.button}
+          onPress={this.handleSubmitLogin.bind(this)}>
+            <Text>Submit</Text>
         </TouchableHighlight>
       </View>
     );
