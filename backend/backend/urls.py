@@ -18,6 +18,7 @@ from django.contrib import admin
 from django.contrib.auth.models import User
 from rest_framework.authtoken import views
 from rest_framework import routers, serializers, viewsets
+from restapi import views as restapi_views
 
 
 class UserSerializer(serializers.HyperlinkedModelSerializer):
@@ -34,6 +35,7 @@ router.register(r'users', UserViewSet)
 
 urlpatterns = [
     url(r'^', include(router.urls)),
+    url(r'^test/$', restapi_views.test_view),
     url(r'^api-token-auth/', views.obtain_auth_token),
     url(r'^admin/', admin.site.urls),
 ]

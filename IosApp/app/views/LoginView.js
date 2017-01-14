@@ -28,7 +28,7 @@ export default class LoginView extends Component {
   handleSubmitLogin() {
     const _this = this;
     if (this.state.username && this.state.password) {
-      fetch(`http://127.0.0.1:8000/api-token-auth/`, {
+      fetch(`localhost:8000/api-token-auth/`, {
         method: 'POST',
         headers: {
           'Accept': 'application/json',
@@ -69,7 +69,20 @@ export default class LoginView extends Component {
   }
 
   render() {
-    CookieManager.getAll((err, res) => console.log(res.access_token.value));
+    let access_token;
+    CookieManager.getAll((err, res) => access_token = res.access_token.value);
+
+    let headers = new Headers()
+    headers.append('Authorization', `Token ${access_token}`);
+
+    fetch(`localhost:8000/users/`, {
+      method: 'GET',
+      headers: headers,
+    })
+    .then(response => {
+      response.json().then(response => console.log(response));
+    });
+
     return (
       <View style={styles.container}>
         <TextInput
