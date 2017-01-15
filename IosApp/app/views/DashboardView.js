@@ -12,7 +12,7 @@ export default class DashboardView extends Component {
     this.props.navigator.push({
       title: 'Login',
       component: LoginView
-    })
+    });
   }
 
   render() {

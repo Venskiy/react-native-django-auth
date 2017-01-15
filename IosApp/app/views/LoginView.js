@@ -28,7 +28,7 @@ export default class LoginView extends Component {
   handleSubmitLogin() {
     const _this = this;
     if (this.state.username && this.state.password) {
-      fetch(`localhost:8000/api-token-auth/`, {
+      fetch(`http://localhost:8000/api-token-auth/`, {
         method: 'POST',
         headers: {
           'Accept': 'application/json',
@@ -69,22 +69,23 @@ export default class LoginView extends Component {
   }
 
   render() {
-    let access_token;
-    CookieManager.getAll((err, res) => access_token = res.access_token.value);
+    //let access_token;
+    //CookieManager.getAll((err, res) => access_token = res.access_token.value);
 
-    let headers = new Headers()
-    headers.append('Authorization', `Token ${access_token}`);
+    //let headers = new Headers()
+    //headers.append('Authorization', `Token ${access_token}`);
 
-    fetch(`localhost:8000/users/`, {
-      method: 'GET',
-      headers: headers,
-    })
-    .then(response => {
-      response.json().then(response => console.log(response));
-    });
+    // fetch(`http://localhost:8000/users/`, {
+    //   method: 'GET',
+    //   headers: headers,
+    // })
+    // .then(response => {
+    //   response.json().then(response => console.log(response));
+    // });
 
     return (
       <View style={styles.container}>
+        <Text onPress={this.handleGoToDashboard.bind(this)}>Go to Dashboard</Text>
         <TextInput
           style={styles.input}
           placeholder="Username"
