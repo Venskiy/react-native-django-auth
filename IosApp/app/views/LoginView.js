@@ -25,6 +25,13 @@ export default class LoginView extends Component {
     }
   }
 
+  handleGoToDashboard() {
+    this.props.navigator.push({
+      title: 'Dashboard',
+      component: DashboardView
+    })
+  }
+
   handleSubmitLogin() {
     const _this = this;
     if (this.state.username && this.state.password) {
@@ -45,13 +52,6 @@ export default class LoginView extends Component {
     }
   }
 
-  handleGoToDashboard() {
-    this.props.navigator.push({
-      title: 'Dashboard',
-      component: DashboardView
-    })
-  }
-
   setCookie(token) {
     let date = new Date();
     date.setDate(date.getDate() + 7);
@@ -69,20 +69,6 @@ export default class LoginView extends Component {
   }
 
   render() {
-    //let access_token;
-    //CookieManager.getAll((err, res) => access_token = res.access_token.value);
-
-    //let headers = new Headers()
-    //headers.append('Authorization', `Token ${access_token}`);
-
-    // fetch(`http://localhost:8000/users/`, {
-    //   method: 'GET',
-    //   headers: headers,
-    // })
-    // .then(response => {
-    //   response.json().then(response => console.log(response));
-    // });
-
     return (
       <View style={styles.container}>
         <Text onPress={this.handleGoToDashboard.bind(this)}>Go to Dashboard</Text>

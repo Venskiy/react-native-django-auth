@@ -8,6 +8,14 @@ import LoginView from './LoginView';
 import CookieManager from 'react-native-cookies'
 
 export default class DashboardView extends Component {
+  constructor(props) {
+    super(props)
+    this.state = {
+      helloWorldResponse: '',
+    }
+    this.helloWorld();
+  }
+
   handleGoToLogin() {
     this.props.navigator.push({
       title: 'Login',
@@ -15,12 +23,32 @@ export default class DashboardView extends Component {
     });
   }
 
+  helloWorld() {
+    const _this = this;
+
+    CookieManager.getAll((err, res) => {
+      if(!res.access_token) {
+        this.setState({ helloWorldResponse: 'You are not authenticated:(' });
+      }
+
+      let headers = new Headers()
+      headers.append('Authorization', `Token ${res.access_token.value}`);
+
+      fetch(`http://localhost:8000/test/`, {
+        method: 'GET',
+        headers: headers,
+      })
+      .then(response => {
+        response.json().then(response => this.setState({ helloWorldResponse: response.result }));
+      });
+    });
+  }
+
   render() {
-    CookieManager.getAll((err, res) => console.log(res.access_token));
     return (
       <View style={styles.container}>
         <Text style={styles.welcome}>
-          I'm the second route!
+          {this.state.helloWorldResponse}
         </Text>
         <Text onPress={this.handleGoToLogin.bind(this)}>Go to Login</Text>
       </View>
