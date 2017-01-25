@@ -22,7 +22,7 @@ from restapi import views as restapi_views
 
 
 urlpatterns = [
-    url(r'^test/$', restapi_views.test),
+    url(r'^hello_world/$', restapi_views.hello_world),
     url(r'^api-token-auth/', views.obtain_auth_token),
     url(r'^admin/', admin.site.urls),
 ]

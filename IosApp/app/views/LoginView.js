@@ -33,7 +33,6 @@ export default class LoginView extends Component {
   }
 
   handleSubmitLogin() {
-    const _this = this;
     if (this.state.username && this.state.password) {
       fetch(`http://localhost:8000/api-token-auth/`, {
         method: 'POST',
@@ -47,7 +46,7 @@ export default class LoginView extends Component {
         })
       })
       .then(response => {
-        response.json().then(response => response.token ? _this.setCookie(response.token) : alert('Wrong username and password.'));
+        response.json().then(response => response.token ? this.setCookie(response.token) : alert('Wrong username or password.')).bind(this);
       });
     }
   }
@@ -58,8 +57,8 @@ export default class LoginView extends Component {
     CookieManager.set({
       name: 'access_token',
       value: token,
-      domain: 'http://127.0.0.1:8000',
-      origin: 'http://127.0.0.1:8000',
+      domain: 'http://localhost:8000',
+      origin: 'http://localhost:8000',
       path: '/',
       version: '1',
       expiration: date.toJSON()

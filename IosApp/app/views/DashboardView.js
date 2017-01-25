@@ -34,12 +34,12 @@ export default class DashboardView extends Component {
       let headers = new Headers()
       headers.append('Authorization', `Token ${res.access_token.value}`);
 
-      fetch(`http://localhost:8000/test/`, {
+      fetch(`http://localhost:8000/hello_world/`, {
         method: 'GET',
         headers: headers,
       })
       .then(response => {
-        response.json().then(response => this.setState({ helloWorldResponse: response.result }));
+        response.json().then(response => this.setState({ helloWorldResponse: response.message }));
       });
     });
   }
