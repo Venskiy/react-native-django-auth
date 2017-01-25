@@ -47,7 +47,7 @@ export default class LoginView extends Component {
         })
       })
       .then(response => {
-        response.json().then(response => _this.setCookie(response.token));
+        response.json().then(response => response.ok ? _this.setCookie(response.token) : alert('Wrong username and password.'));
       });
     }
   }
